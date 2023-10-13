@@ -6,11 +6,11 @@ const TaskController = require('../controllers/TaskController')
 // Get all tasks
 router.get('/', TaskController.getAllTasks)
 
-//Obtain one task
-router.get('/:id', TaskController.getOneTask)
-
 // Insert a new task
 router.post('/', TaskController.insertTask)
+
+//Obtain one task
+router.get('/:id', TaskController.getOneTask)
 
 // Update a task
 router.put('/:id', TaskController.updateTask)

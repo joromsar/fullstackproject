@@ -1,13 +1,10 @@
 const express = require('express');
 const mongoose = require('mongoose');
-
 const PORT = 3000;
-
 const Routes = require('./routes')
-
 const server = express();
-
 server.use(express.json())
+require('dotenv').config()
 
 server.use(function (req, res, next) {  
 
@@ -24,11 +21,9 @@ server.use('/api/v1/tasks', Routes.TaskRoutes);
 
 
 const mongooseConnect = async () => {
-
     try {
-        await mongoose.connect('mongodb+srv://jeromero7884:OthnqlyJ8zJLDMzO@cluster0.f9bmpwk.mongodb.net/TaskApp?retryWrites=true&w=majority')
-        console.log('Conexion Exitosa a Mongo DB');
-
+        await mongoose.connect(process.env.MONGO_URL);
+        console.log('Conexion a Mongo Exitosa');
     } catch (error) {
         console.error(error);
 
