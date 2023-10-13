@@ -18,6 +18,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import TaskOutlinedIcon from '@mui/icons-material/TaskOutlined';
+import AddIcon from '@mui/icons-material/Add';
 import ManageTasks from "./manage_tasks.jsx";
 import { Outlet } from "react-router-dom";
 
@@ -138,6 +139,7 @@ export default function Navbar() {
                                 justifyContent: open ? 'initial' : 'center',
                                 px: 2.5,
                             }}
+                            href="/dashboard"
                         >
                             <ListItemIcon
                                 sx={{
@@ -153,6 +155,30 @@ export default function Navbar() {
                     
                 </List>
                 <Divider />
+                <List>
+                    <ListItem disablePadding sx={{ display: 'block' }}>
+                        <ListItemButton
+                            sx={{
+                                minHeight: 48,
+                                justifyContent: open ? 'initial' : 'center',
+                                px: 2.5,
+                            }}
+                            href="/create-task"
+                        >
+                            <ListItemIcon
+                                sx={{
+                                    minWidth: 0,
+                                    mr: open ? 3 : 'auto',
+                                    justifyContent: 'center',
+                                }}
+                            ><AddIcon />
+                            </ListItemIcon>
+                            <ListItemText primary="Create New Task" sx={{ opacity: open ? 1 : 0 }} ListItemText />
+                        
+                        </ListItemButton>
+                    </ListItem>
+                    
+                </List>
             </Drawer>
             <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
                 <DrawerHeader />

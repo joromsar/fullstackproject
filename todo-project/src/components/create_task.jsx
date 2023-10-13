@@ -10,14 +10,12 @@ import TextField from "@mui/material/TextField";
 import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-
-
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios'
 
 const label = { inputProps: { 'aria-label': 'Task Completed?' } };
 
-export default function Edit_Task() {
+export default function Create_Task() {
     const navigate = useNavigate()
     const { id } = useParams();
     const [task, setTask] = useState({})
@@ -26,10 +24,9 @@ export default function Edit_Task() {
     const [checked, setChecked] = React.useState(true);
 
     React.useEffect(() => {
-        axios.get(`http://localhost:3000/api/v1/tasks/${id}`)
+        axios.get(`http://localhost:3000/api/v1/tasks`)
             .then((res) => {
-                setTask(res.data.task)
-                setNewTask(res.data.task)
+                console.log(res)
             })
             .catch((error) => {
                 console.error(error);
@@ -37,18 +34,13 @@ export default function Edit_Task() {
             });
     }, []);
 
-    const getHandler = (tasks) => {
-        return (event) => setNewTask({ ...newTask, [tasks]: event.target.value })
-    }
 
     const handleSubmit = (e) => {
         e.preventDefault()
     }
 
-    const handleEditTask = (id) => {
-
-        axios.put(`http://localhost:3000/api/v1/tasks/${id}`,
-            { ...newTask })
+    const handleCreateTask = () => {
+        axios.post(`http://localhost:3000/api/v1/tasks`)
             .then(res => {
                 navigate('/dashboard')
             })
@@ -73,7 +65,7 @@ export default function Edit_Task() {
                             align="center"
                             gutterBottom
                         >
-                            <strong>Edit Task: {newTask.title}</strong>
+                            <strong>Create New Task</strong>
                         </Typography>
 
                         <div>
@@ -85,9 +77,8 @@ export default function Edit_Task() {
                                     variant="standard"
                                     type="text"
                                     name="title"
-                                    placeholder={newTask.title}
+                                    placeholder= "Insert the title of your task"
                                     value={newTask.title}
-                                    onChange={getHandler('title')}
 
 
                                 />
@@ -101,9 +92,8 @@ export default function Edit_Task() {
                                     type="text"
                                     name="description"
                                     variant="standard"
-                                    placeholder={newTask.description}
+                                    placeholder="Put in a task description"
                                     value={newTask.description}
-                                    onChange={getHandler('description')}
                                 />
                             </Box>
                             <Box sx={{ display: "flex", alignItems: "flex-end" }}>
@@ -113,7 +103,6 @@ export default function Edit_Task() {
                                     type="date"
                                     variant="standard"
                                     value={newTask.targetdate}
-                                    onChange={getHandler('targetdate')}
 
                                 />
                             </Box>
@@ -121,14 +110,7 @@ export default function Edit_Task() {
                             <Box sx={{ display: "flex", alignItems: "flex-end" }}>
                                 <FormControlLabel label="Task Completed?"
                                     control={
-                                        <Checkbox
-                                            defaultChecked={newTask.completed}
-                                            onChange={(event) => {
-                                                setNewTask({ ...newTask, ['completed']: event.target.checked })
-                                                console.log(newTask, event.target.checked)
-                                            }}
-
-                                        />
+                                        <Checkbox/>
                                     }
                                 />
 
@@ -137,8 +119,8 @@ export default function Edit_Task() {
                     </CardContent>
                     <CardActions style={{ justifyContent: "center" }}>
                         <Box textAlign="center">
-                            <Button variant="outlined" size="large" onClick={() => handleEditTask(id)}>
-                                Edit Task
+                            <Button variant="outlined" size="large" type="submit">
+                                New Task
                             </Button>
                         </Box>
                     </CardActions>
@@ -147,6 +129,3 @@ export default function Edit_Task() {
         </>
     )
 }
-
-
-

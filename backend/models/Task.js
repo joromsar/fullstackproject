@@ -42,8 +42,8 @@ const updateTask = async (id, newTask) => {
 
     oldTask.title = newTask.title
     oldTask.description = newTask.description
-    oldTask.targetdate = newTask.deadline
-    oldTask.completed = newTask.done
+    oldTask.targetdate = newTask.targetdate
+    oldTask.completed = newTask.completed
 
     return await oldTask.save()
 

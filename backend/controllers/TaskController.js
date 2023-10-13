@@ -21,16 +21,21 @@ const insertTask = async (req, res) => {
 }
 
 const updateTask = async (req, res) => {
-    const id = req.params.id
+    console.log(req.body, req.params)
+    const { id } = req.params
     const { title, description, completed, targetdate } = req.body
+    console.log(id, title, description, completed, targetdate)
 
-    await task.updateTask(id, { title, description, completed, targetdate })
+    const newTask = { title, description, completed, targetdate:new Date(targetdate) }
+    console.log(newTask)
+
+    await task.updateTask(id, newTask)
         .then((response) => {
             res.status(201).send({ message: `Task ${title} updated successfully` })
 
         })
         .catch((error) => {
-            res.status(401).send({ message: 'Error or invalid data' })
+            res.status(401).send({ message: 'Error or invalid data', error })
         })
 
 }
